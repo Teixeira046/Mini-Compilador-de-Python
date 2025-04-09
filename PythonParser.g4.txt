@@ -1,0 +1,13 @@
+grammar PythonParser;
+
+code: stat* EOF;
+
+stat: expr NEWLINE;
+
+expr
+    : ID                            
+    | NUMBER                       
+    | expr op=('*'|'/') expr        
+    | expr op=('+'|'-') expr        
+    | '(' expr ')'                  
+    ;
