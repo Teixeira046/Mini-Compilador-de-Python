@@ -1,21 +1,9 @@
 grammar PythonParser;
 
-code: (stat | condicional)* EOF;
+code: stat* EOF;
 
-stat: (expr | query) NEWLINE;
+stat: expr NEWLINE;
 
-condicional
-    : 'if' query ':' block
-    | 'if' query ':' block 'else' ':' block
-    | 'if' query ':' block 'elifBranch+ else' ':' block
-    ;
-
-elifBranch
-    : 'elif' query ':' block;
-
-block
-    : (stat | condicional)+;
-    
 expr
     : ID                            
     | NUMBER                       
