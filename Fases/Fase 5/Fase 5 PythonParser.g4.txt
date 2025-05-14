@@ -1,6 +1,6 @@
 grammar PythonParser;
 
-code: (stat | condicional | func | func_call)* EOF;
+code: (stat | condicional)* EOF;
 
 stat: (expr | query) NEWLINE;
 
@@ -13,37 +13,17 @@ condicional
 elifBranch
     : 'elif' query ':' block;
 
-func
-    : 'def' ID '(' paramList? ')' ':' block
-    
-    ;
-
-paramList
-    : ID (',' ID)*;
-
-func_call
-    : ID '(' argList? ')' NEWLINE
-
-    ;
-
-argList
-    : expr (',' expr)*;
-
 block
-    : (stat | condicional | func_call | func)+;
-
+    : (stat | condicional)+;
+    
 expr
     : ID                            
-    | NUMBER 
-    | func_call_expr                      
+    | NUMBER                       
     | expr op=('*'|'/') expr        
     | expr op=('+'|'-') expr        
     | '(' expr ')'                  
     ;
 
-func_call_expr
-    : ID '(' argList? ')' ;
-    
 query
     : BOOL
     | query op=('AND' | 'OR' ) query
