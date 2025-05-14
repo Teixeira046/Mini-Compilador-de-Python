@@ -11,3 +11,20 @@ expr
     | expr op=('+'|'-') expr        
     | '(' expr ')'                  
     ;
+
+query
+    : BOOL
+    | query op=('AND' | 'OR' ) query
+    | 'NOT' query
+    | '(' query ')'
+    | expr relOp expr
+    ;
+
+relOp: '==' | '!=' | '<' | '<=' | '>' | '>=';
+
+BOOL: 'TRUE' | 'FALSE';
+
+ID: [a-zA-Z_][a-zA-Z0-9_]*;
+NUMBER: [0-9]+ ('.' [0-9]+)?;
+NEWLINE: '\r'? '\n';
+WS: [ \t]+ -> skip;
